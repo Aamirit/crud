@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LoginController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,3 +46,16 @@ Route::get('view', [UserController::class,'Show_data'])->name("listdata");
 Route::post('edit',[UserController::class,'edit'])->name('customeredit');
 Route::post('update',[UserController::class,'Update_user'])->name("updateuser");
  Route::post('delete',[UserController::class,'delete'])->name('deletecustomer');
+ Route::get('login-view', function () {
+    return view('login');
+});
+
+Route::get('register_user',function(){
+    return view('registeruser');
+});
+Route::post('login',[LoginController::class,'authenticate'])->name('login');
+Route::get('dashboard',function () {
+    return view('dashboard');
+    // Only authenticated users may access this route...
+})->middleware('auth');
+Route::get('sendmail',[LoginController::class,'mailsend'])->name('sendmail');
