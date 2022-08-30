@@ -24,6 +24,7 @@
                      <th>Address</th>
                      <th>Zip</th>
                      <th>State</th>
+                     <th>File</th>
                      <th>Actions</th>
                   </tr>
                </thead>
@@ -37,6 +38,13 @@
                      <td>{{$customer->zip}}</td>
                      <td>{{$customer->state}}</td>
                      <td>
+                        @if (strpos($customer->file,'.pdf') > 1)
+   <a href="{{ asset('upload/'.$customer->file) }}" target="_blank">Download Pdf</a>
+                           @else
+
+                           <img src="{{ asset('upload/'.$customer->file.'') }}" width="100px" alt="user-image"></td>
+                        @endif
+                  <td>
                         {{-- {{route('customeredit',['id' => $customer->id])}} --}}
                         {{-- <a href="{{route('deletecustomer',['id' => $customer->id])}}">Move toTrash</a> --}}
                         <form  id="editForm">
@@ -214,7 +222,7 @@
             $(document).on("click","#deletedata",function(e) {
           e.preventDefault();
              var id = $(this).attr("data-id");
-  
+             var _token = $('#deletefrm input[name="_token"]').val();
            swal({
                     title: "Are you sure?",
                     text: "Once deleted, you will not be able to recover this Data!",

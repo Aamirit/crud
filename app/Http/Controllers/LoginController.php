@@ -33,7 +33,7 @@ class LoginController extends Controller
  
             return redirect()->intended('dashboard');
         }
-  echo "hello world";exit;
+//   echo "hello world";exit;
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ]);
@@ -49,4 +49,9 @@ class LoginController extends Controller
         Mail::to('mamir.tvs@gmail.com')->send(new SendMail($details));
         return view('emails.thanks');
     }
+
+    public function logout(Request $request) {
+        Auth::logout();
+        return redirect('/login-view');
+      }
 }

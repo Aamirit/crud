@@ -31,7 +31,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Register</h4>
+          <h4 class="modal-title">Register User</h4>
         </div>
         <div class="modal-body">
 
@@ -67,29 +67,7 @@
                     <input type="password" class="form-control" id="cnf_pwd" placeholder="Confirm password" name="password_confirmation">
                     <span class="password_confirmation_error all_errors">&nbsp;</span>
                 </div>
-                <div class="form-group col-md-6">
-                    <label for="address">Address:</label>
-                    <input type="text" class="form-control" id="address" name="address">
-                 
-                    <span class="address_error all_errors">&nbsp;</span></div>
-
-                  <div class="form-group col-md-6">
-                    <label for="zip">Zip:</label>
-                    <input type="text" class="form-control" id="zip" name="zip">
-                    <span class="zip_error all_errors">&nbsp;</span>
-                  </div>
-
-
-                  <div class="form-group">
-                    <label for="state">Statae</label>
-                    <select class="form-control" id="state" name="state">
-                      <option>Punjab</option>
-                      <option>Sindh</option>
-                      <option>KPK</option>
-                      <option>Balochistan</option>
-                    </select>
-                    <span class="state_error all_errors"></span>
-                  </div><br>
+               
                 {{-- <div class="checkbox">
                   <label><input type="checkbox" name="remember"> Remember me</label>
                 </div> --}}
@@ -117,7 +95,7 @@
                $('.all_errors').empty();
           $.ajax({
              type: "POST",
-             url: "{{route('form_submit')}}",
+             url: "{{route('registeruser')}}",
              dataType: "json",
              data: $('form').serializeArray(),
              success : function(data){

@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterUser;
+use App\Http\Middleware\Authenticate;
 
 
 /*
@@ -46,16 +48,32 @@ Route::get('view', [UserController::class,'Show_data'])->name("listdata");
 Route::post('edit',[UserController::class,'edit'])->name('customeredit');
 Route::post('update',[UserController::class,'Update_user'])->name("updateuser");
  Route::post('delete',[UserController::class,'delete'])->name('deletecustomer');
+ 
  Route::get('login-view', function () {
     return view('login');
 });
 
-Route::get('register_user',function(){
+Route::get('register_user_view',function(){
     return view('registeruser');
 });
+Route::post('registeruser',[RegisterUser::class,'register_user'])->name('registeruser');
+
 Route::post('login',[LoginController::class,'authenticate'])->name('login');
-Route::get('dashboard',function () {
-    return view('dashboard');
-    // Only authenticated users may access this route...
-})->middleware('auth');
+// Route::get('dashboard',function () {
+//     return view('dashboard');
+//     // Only authenticated users may access this route...
+// })->middleware('auth');
 Route::get('sendmail',[LoginController::class,'mailsend'])->name('sendmail');
+Route::get('logout',[LoginController::class,'logout'])->name('logout');
+
+Route::middleware(['auth'])->group(function () {
+    //
+    Route::get('dashboard',function () {
+            return view('dashboard');
+            // Only authenticated users may access this route...
+        });
+});
+
+
+
+

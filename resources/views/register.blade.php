@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Simple add</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -35,7 +35,7 @@
         </div>
         <div class="modal-body">
 
-            <form id="rgstr_form">
+            <form id="rgstr_form" enctype="multipart/form-data">
 
               <div class="success"></div>
                 {{-- <pre>
@@ -78,7 +78,8 @@
                     <input type="text" class="form-control" id="zip" name="zip">
                     <span class="zip_error all_errors">&nbsp;</span>
                   </div>
-
+                 
+                  {{-- <input type="file" class="form-control" name="file" id="file_upload"> --}}
 
                   <div class="form-group">
                     <label for="state">Statae</label>
@@ -90,6 +91,9 @@
                     </select>
                     <span class="state_error all_errors"></span>
                   </div><br>
+                  <input type="file" name="file" class="form-control">
+                  <span class="file_error all_errors">&nbsp;</span>
+                  
                 {{-- <div class="checkbox">
                   <label><input type="checkbox" name="remember"> Remember me</label>
                 </div> --}}
@@ -112,14 +116,16 @@
 <script type="text/javascript">
          $(document).ready(function() {
          
-            $(document).on("click","#sbmt",function(e) {
+            $(document).on("submit","#rgstr_form",function(e) {
           e.preventDefault();
                $('.all_errors').empty();
           $.ajax({
              type: "POST",
              url: "{{route('form_submit')}}",
              dataType: "json",
-             data: $('form').serializeArray(),
+             data: new FormData(this),
+             processData: false,
+            contentType: false,
              success : function(data){
               // console.log(data.errors);
               $('#rgstr_form').trigger('reset');

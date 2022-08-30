@@ -12,7 +12,7 @@
 
 <div class="container">
  
-  <form action="{{'login'}}" method="POST">
+  <form action="{{'login'}}" method="POST" >
     @csrf
     <div class="form-group">
       <label for="email">Email:</label>
