@@ -44,6 +44,12 @@ Route::post('/sbmt',[UserController::class,'Create_User'])->name("form_submit");
 // Route::get('/view',[UserController::class,'Create_User'])->name("form_submit");
 Route::get('view', [UserController::class,'Show_data'])->name("listdata");
 
+Route::get('csv-view',function(){
+    return view('sbmitcsv');
+});
+
+Route::post('uploadcsv', [UserController::class,'upload_csv']);
+
 
 Route::post('edit',[UserController::class,'edit'])->name('customeredit');
 Route::post('update',[UserController::class,'Update_user'])->name("updateuser");

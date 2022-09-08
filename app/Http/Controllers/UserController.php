@@ -169,5 +169,7 @@ public function delete(Request $req){
         echo json_encode($data);
 exit;
 }
-
+public function upload_csv(Request $req){
+    // echo"123";
+}
 }
