@@ -38,7 +38,7 @@ class RegisterUser extends Controller
         $user->name = $req['name'];
         $user->email = $req['email'];
         // $request['password'] =
-        $user->password = Hash::make($req->password);;
+        $user->password = Hash::make($req->password);
         $user->save();
         // print_r($user);
         // exit;
