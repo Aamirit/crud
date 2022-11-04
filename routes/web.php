@@ -80,6 +80,12 @@ Route::middleware(['auth'])->group(function () {
         });
 });
 
+Route::get('datatable',function(){
+    return view('datatable');
+});
+// Route::get('datatable', [UserController::class, 'index']); 
+Route::get('/getEmployees', [UserController::class, 'getEmployees'])->name('getEmployees');
+
 
 
 

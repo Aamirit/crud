@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Customer extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'name','email','address'
-     ];
+    protected $table = "customers";
+    protected $primaryKey ="id";
+
+    public $timestamps = false;
+
 }

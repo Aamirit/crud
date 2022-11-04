@@ -170,6 +170,86 @@ public function delete(Request $req){
     exit;
     }
     public function upload_csv(Request $req){
-        echo"123";
+      $formData = $req->input();
+     
+    $file = $req->file('file');
+    print_r($file);
+      exit;
     }
+
+    // Fetch records
+    public function getEmployees(Request $request){
+        // echo"123";
+        $formData = $request->input();
+    
+        ## Read value
+        // $orderByColumnIndex = $request->get(['order'][0]['column']);
+        // print_r($orderByColumnIndex);
+        // exit;
+		// $orderByColumn = $request->get['columns'][$orderByColumnIndex]['data'];
+		// $orderType = $request->get['order'][0]['dir'];
+		// $offset = $request->input->post('start');
+		// $limit = $request->input->post('length');
+		// $draw = $request->input->post('draw');
+		// $search = $request->get['search']['value'];
+
+
+
+
+        $draw = $request->get('draw');
+        $start = $request->get("start");
+        $rowperpage = $request->get("length"); // Rows display per page
+        
+        $columnIndex_arr = $request->get('order');
+        
+        $columnName_arr = $request->get('columns');
+        $order_arr = $request->get('order');
+        $search_arr = $request->get('search');
+        // print_r($search_arr);
+        // exit;
+
+        $columnIndex = $columnIndex_arr[0]['column']; // Column index
+        $columnName = $columnName_arr[$columnIndex]['data']; // Column name
+        $columnSortOrder = $order_arr[0]['dir']; // asc or desc
+        $searchValue = $search_arr['value']; // Search value
+        // Total records
+        $totalRecords = customer::select('count(*) as allcount')->count();
+        // echo"1234";
+      
+        $totalRecordswithFilter = customer::select('count(*) as allcount')->where('name', 'like', '%' .$searchValue . '%')->count();
+       
+        // Fetch records
+        $records = customer::orderBy($columnName,$columnSortOrder)->where('customers.name', 'like', '%' .$searchValue . '%')->select('customers.*')->skip($start)->take($rowperpage)->get();
+             
+        $data_arr = array();
+
+        foreach($records as $record){
+           $id = $record->id;
+           $name = $record->name;
+           $email = $record->email;
+           $address = $record->address;
+
+           $data_arr[] = array(
+               "id" => $id,
+               "name" => $name,
+               "email" => $email,
+               "address" => $address
+           );
+        }
+
+        $response = array(
+           "draw" => intval($draw),
+           "iTotalRecords" => $totalRecords,
+           "iTotalDisplayRecords" => $totalRecordswithFilter,
+           "aaData" => $data_arr
+        );
+        // print_r($response);
+        // exit;
+
+        return response()->json($response); 
+     }
+
+
+
+
 }
